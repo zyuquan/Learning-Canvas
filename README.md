@@ -4,7 +4,8 @@
     * [canvas用法](#canvas用法)
     * [渲染上下文](#渲染上下文)
     * [检查支持项](#检查支持项)
-
+* [绘制图形](#绘制图形)
+    * [绘制矩形方法](#绘制矩形方法)
 ## 基本用法
 #### canvas用法
 ```
@@ -28,6 +29,30 @@ canvas起初是空白的。为了展示，首先脚本需要找到渲染上下�
         var ctx = canvas.getContext("2d");
     } else {
         \\
+    }
+```
+
+## 绘制图形
+如何在canvas上绘制三角形、直线、圆弧和曲线。须知左上角为原点坐标，所有元素的位置都相对于原点定位。  
+#### 绘制矩形方法
+```
+    fillRect(x, y, width, height) // 绘制一个填充矩形
+    strokeRect(x, y, width, height) // 绘制一个矩形的边框
+    clearRect(x, y, width, height) // 清楚指定矩形区域，让清除部分完全透明
+```
+矩形例子
+```
+    function draw() {
+        var canvas = document.getElementById("canvas");
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            // 绘制一个起点在(25, 25)位置宽100，高100的矩形
+            ctx.fillRect(25, 25, 100, 100);
+            // 清除一个起点在(45, 45)位置宽60，高60的矩形
+            ctx.clearRect(45, 45, 60, 60);
+            // 绘制一个起点在(50, 50)位置宽50，高50的矩形边框
+            ctx.strokeRect(50, 50, 50, 50);
+        }
     }
 ```
 
