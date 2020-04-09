@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="400" style="background: #eeeeee"></canvas>
+</body>
+<script>
+    const canvas = document.getElementById("canvas");
+    const cxt = canvas.getContext("2d");
+    cxt.fillRect(200, 100, 400, 200);
+    cxt.clearRect(250, 150, 300, 100);
+    cxt.strokeRect(300, 175, 200, 50);
+
+    cxt.fillStyle = "#000000";
+    cxt.rect(0, 0, 200, 100);
+    cxt.fill();
+
+    cxt.strokeStyle = "#000000";
+    cxt.rect(600, 300, 200, 100);
+    cxt.stroke();
+</script>
+</html>

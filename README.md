@@ -9,7 +9,7 @@
     + [绘制路径和线](#绘制路径和线)  
     + [圆弧](#圆弧)  
     + [二次贝塞尔曲线及三次贝塞尔曲线](#二次贝塞尔曲线及三次贝塞尔曲线)  
-    + [Path2D对象](#Path2D对象)
+    + [Path2D 对象](#Path2D 对象)
 ## 基本用法
 #### canvas用法
 ```
@@ -80,6 +80,24 @@ canvas起初是空白的。为了展示，首先脚本需要找到渲染上下�
 > __注意__：当前路径为空，即调用beginPath()之后，或者canvas刚建的时候，第一条路径构造命令通常被视为是moveTo（），无论实际上是什么。出于这个原因，你几乎总是要在设置路径之后专门指定你的起始位置。  
 
 > __注意__：当你调用fill()函数时，所有没有闭合的形状都会自动闭合，所以你不需要调用closePath()函数。但是调用stroke()时不会自动闭合。  
+__示例__
+```
+    const canvas = document.getElementById("canvas");
+    const cxt = canvas.getContext("2d");
+    cxt.fillRect(200, 100, 400, 200);
+    cxt.clearRect(250, 150, 300, 100);
+    cxt.strokeRect(300, 175, 200, 50);
+
+    cxt.fillStyle = "#000000";
+    cxt.rect(0, 0, 200, 100);
+    cxt.fill();
+
+    cxt.strokeStyle = "#000000";
+    cxt.rect(600, 300, 200, 100);
+    cxt.stroke();
+```
+![](images/1.jpg)
+
 #### 圆弧
 绘制圆弧或者圆，我们使用arc()方法。当然可以使用arcTo()，不过这个的实现并不是那么的可靠，所以我们这里不作介绍。  
 ```
