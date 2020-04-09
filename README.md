@@ -93,8 +93,8 @@ __示例__
     cxt.rect(600, 300, 200, 100);
     cxt.stroke();
 ```
-![alt img](images/1.jpg)
-<img src="images/1.jpg" >
+<iframe src="./example/drawAngle/rect.html"></iframe>
+
 > __注意__：当前路径为空，即调用beginPath()之后，或者canvas刚建的时候，第一条路径构造命令通常被视为是moveTo（），无论实际上是什么。出于这个原因，你几乎总是要在设置路径之后专门指定你的起始位置。  
 
 > __注意__：当你调用fill()函数时，所有没有闭合的形状都会自动闭合，所以你不需要调用closePath()函数。但是调用stroke()时不会自动闭合。  
