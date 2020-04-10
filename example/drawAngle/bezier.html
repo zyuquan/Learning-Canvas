@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="400" style="background: #eeeeee"></canvas>
+</body>
+<script>
+// 说明：圆弧的起点是起点和第一个控制点的连线的切点，圆弧的终点是第二个控制点和终点的连线的切点
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.beginPath();
+    // 起始点(400, 50)
+    ctx.moveTo(400, 50);
+    // 第一个控制点(700, 200), 第二个控制点(800, 400), 终点(200, 300)
+    ctx.bezierCurveTo(700, 200, 700, 350, 200, 300);
+    ctx.stroke();
+
+    // 起始点位置
+    ctx.fillStyle = "green";
+    ctx.fillRect(400, 50, 5, 5);
+
+    // 第一个控制点位置
+    ctx.fillStyle = "red";
+    ctx.fillRect(700, 200, 5, 5);
+
+    // 第二个控制点位置
+    ctx.fillStyle = "res";
+    ctx.fillRect(700, 350, 5, 5);
+
+    // 终点位置
+    ctx.fillStyle = "blue";
+    ctx.fillRect(200, 300, 5, 5);
+
+    ctx.strokeStyle = "green";
+    ctx.beginPath();
+    ctx.moveTo(400, 50);
+    ctx.lineTo(700, 200);
+    ctx.stroke();
+
+    ctx.strokeStyle = "blue";
+    ctx.beginPath();
+    ctx.moveTo(700, 350);
+    ctx.lineTo(200, 300);
+    ctx.stroke();
+</script>
+</html>

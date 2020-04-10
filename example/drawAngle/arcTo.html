@@ -9,13 +9,43 @@
     <canvas id="canvas" width="800" height="400" style="background: #eeeeee"></canvas>
 </body>
 <script>
+// 说明：arcTo绘制的圆弧，是起始点(x, y)和第一个控制点(x1, y1)的连线 和 第一个控制点(x1, y1)的连线和第二个控制点(x2, y2)的连线 相切 的圆弧
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     // 设置线形
     ctx.setLineDash([]);
     ctx.beginPath();
-    ctx.moveTo(600, 200);
-    ctx.arcTo(800,400,200,400,200);
+    // 移动位置到(400, 200)
+    ctx.moveTo(400, 100);
+    // 绘制圆弧以(400, 200)为第一个控制点，(200, 300)为第二个控制点，100为半径
+    ctx.arcTo(400,300,200,300,100);
+    ctx.stroke();
+
+    // 设置线型为长度5
+    ctx.setLineDash([5, 5]);
+    // 移动起始点到(400, 200)
+    ctx.moveTo(400, 200);
+    ctx.arc(300, 200, 100, 0, 2*Math.PI);
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+    ctx.fillStyle = "green";
+    ctx.fillRect(397, 97, 6, 6);
+
+    ctx.fillStyle = "red";
+    ctx.fillRect(397, 297, 6, 6);
+    ctx.fillRect(197, 297, 6, 6);
+
+    ctx.strokeStyle = "green";
+    ctx.beginPath();
+    ctx.moveTo(400, 200);
+    ctx.lineTo(400, 300);
+    ctx.stroke();
+
+    ctx.strokeStyle = "red";
+    ctx.beginPath();
+    ctx.moveTo(400, 300);
+    ctx.lineTo(200, 300);
     ctx.stroke();
 </script>
 </html>

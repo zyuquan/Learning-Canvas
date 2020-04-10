@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="400" style="background: #eeeeee"></canvas>
+</body>
+<script>
+// 说明：由控制点决定圆弧的形状，圆弧的起点位置是起点和第一个控制点的切点，终点位置是控制点和终点的切点
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.strokeStyle = "#000000";
+    ctx.beginPath();
+    // 起始点
+    ctx.moveTo(400, 100);
+    // 第一个控制点(800, 400), 结束点(100, 300)
+    ctx.quadraticCurveTo(700, 390, 100, 300);
+    ctx.stroke();
+
+    // 起始点
+    ctx.fillStyle = "green";
+    ctx.fillRect(400, 100, 5, 5);
+
+    // 第一个控制点
+    ctx.fillStyle = "red";
+    ctx.fillRect(700, 390, 5, 5);
+
+    // 结束点
+    ctx.fillStyle = "blue";
+    ctx.fillRect(100, 300, 5, 5);
+
+    ctx.strokeStyle = "red";
+    ctx.beginPath();
+    ctx.moveTo(400, 100);
+    ctx.lineTo(700, 390);
+    ctx.stroke();
+
+    ctx.strokeStyle = "blue";
+    ctx.beginPath();
+    ctx.moveTo(700, 390);
+    ctx.lineTo(100, 300);
+    ctx.stroke();
+</script>
+</html>
