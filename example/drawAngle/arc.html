@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="400" style="background: #eeeeee"></canvas>
+</body>
+<script>
+    const canvas = document.getElementById("canvas");
+    const cxt = canvas.getContext("2d");
+    cxt.strokeStyle = "#000000";
+    cxt.beginPath();
+    cxt.arc(400, 200, 100, 0, 2*Math.PI);
+    cxt.moveTo(370, 160);
+    cxt.arc(360, 160, 10, 0, 2*Math.PI);
+    cxt.moveTo(450, 160);
+    cxt.arc(440, 160, 10, 0, 2*Math.PI);
+    cxt.moveTo(451.96, 230);
+    cxt.arc(400, 200, 60, Math.PI/6, (Math.PI-Math.PI/6));
+    cxt.stroke();
+
+</script>
+</html>

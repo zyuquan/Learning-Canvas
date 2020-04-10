@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="400" style="background: #eeeeee"></canvas>
+</body>
+<script>
+    const canvas = document.getElementById("canvas");
+    const cxt = canvas.getContext("2d");
+    // 设置填充颜色
+    cxt.fillStyle = "#000000";
+    // 开启绘图
+    cxt.beginPath();
+    // 顺时针绘制一个圆心为(200, 200)，半径150的圆
+    cxt.arc(200, 200, 150, 0, 2*Math.PI);
+    // 逆时针绘制一个圆心为(200, 200)，半径100的圆
+    cxt.arc(200, 200, 100, 0, 2*Math.PI, true);
+    cxt.fill();
+
+    // 顺时针绘制一个圆心为(600, 200)，半径150的圆
+    cxt.arc(600, 200, 150, 0, 2*Math.PI);
+    // 顺时针绘制一个圆心为(600, 200)，半径100的圆
+    cxt.arc(600, 200, 100, 0, 2*Math.PI);
+    // 使用奇偶环绕规则填充圆
+    cxt.fill("evenodd");
+</script>
+</html>
