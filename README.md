@@ -9,7 +9,15 @@
     + [绘制路径和线](#绘制路径和线)  
     + [圆弧](#圆弧)  
     + [二次贝塞尔曲线及三次贝塞尔曲线](#二次贝塞尔曲线及三次贝塞尔曲线)  
-    + [Path2D对象](#Path2D对象)
+    + [Path2D对象](#Path2D对象)  
++ [添加样式和颜色](#添加样式和颜色)  
+    + [色彩Color](#色彩Color)  
+    + [透明度](#透明度)  
+    + [线型LineStyle](#线型LineStyle)  
+    + [渐变](#渐变)  
+    + [图案样式](#图案样式)  
+    + [阴影](#阴影)  
+    + [Canvas填充规则](#Canvas填充规则)  
 ## 基本用法
 #### canvas用法
 ```
@@ -133,3 +141,68 @@ __使用 SVG paths__
 ```
     var p = new Path2D("M10 10 h 80 v 80 h -80 Z");
 ```
+
+## 添加样式和颜色
+#### 色彩Color
+如果想要给图形上色，有两个重要的属性可以做到：  
+__fillStyle = collor__ 设置图形的填充颜色  
+__strokeStyle = collor__ 设置图形轮廓的颜色  
+> __注意:__ 一旦您设置了 strokeStyle 或者 fillStyle 的值，那么这个新值就会成为新绘制的图形的默认值。如果你要给每个图形上不同的颜色，你需要重新设置 fillStyle 或 strokeStyle 的值。  
+#### 透明度
+__globalAlpha = value__  
+这个属性影响到 canvas 里所有图形的透明度，有效的值范围是 0.0 （完全透明）到 1.0（完全不透明），默认是 1.0。  
+#### 线型LineStyle
+__lineWidth = value__ 设置线条宽度  
+__lineCap = type__ 设置线末端样式  
+```
+ctx.lineCap = "butt"; // 线段末端以方形结束
+ctx.lineCap = "round"; // 线段末端以圆形结束
+ctx.lineCap = "square"; // 线段末端以方形结束，但是增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
+```
+__lineJoin = type__ 设置线条与线条结合处的样式  
+```
+// 在相连部分的末端填充一个额外的以三角形为底的区域， 每个部分都有各自独立的矩形拐角
+ctx.lineJoin = "bevel";
+// 通过填充一个额外的，圆心在相连部分末端的扇形，绘制拐角的形状。 圆角的半径是线段的宽度
+ctx.lineJoin = "round";
+// 通过延伸相连部分的外边缘，使其相交于一点，形成一个额外的菱形区域
+ctx.lineJoin = "miter";
+```
+__miterLimit = value__ 限制当两条线相交时交接处最大长度；所谓交接处长度（斜接长度）是指线条交接处内角顶点到外角顶点的长度  
+__getLineDash()__ 返回一个包含当前虚线样式，长度为非负偶数的数组  
+__setLineDash(segments)__ 设置当前虚线样式
+__lineDashOffset = value__ 设置虚线样式的起始偏移量
+#### 渐变
+__createLinearGradient(x1, y1, x2, y2)__  
+createLinearGradient 方法接受 4 个参数，表示渐变的起点 (x1,y1) 与终点 (x2,y2)  
+__createRadialGradient(x1, y1, r1, x2, y2, r2)__  
+createRadialGradient 方法接受 6 个参数，前三个定义一个以 (x1,y1) 为原点，半径为 r1 的圆，后三个参数则定义另一个以 (x2,y2) 为原点，半径为 r2 的圆。  
+```
+var lineargradient = ctx.createLinearGradient(0,0,150,150);
+var radialgradient = ctx.createRadialGradient(75,75,0,75,75,100);
+```
+创建出 canvasGradient 对象后，我们就可以用 addColorStop 方法给它上色了。  
+__gradient.addColorStop(position, color)__  
+addColorStop 方法接受 2 个参数，position 参数必须是一个 0.0 与 1.0 之间的数值，表示渐变中颜色所在的相对位置。例如，0.5 表示颜色会出现在正中间。color 参数必须是一个有效的 CSS 颜色值（如 #FFF， rgba(0,0,0,1)，等等）  
+#### 图案样式
+__createPattern(image, type)__  
+该方法接受两个参数。Image 可以是一个 Image 对象的引用，或者另一个 canvas 对象。Type 必须是下面的字符串值之一：repeat，repeat-x，repeat-y 和 no-repeat  
+```
+var img = new Image();
+img.src = 'someimage.png';
+var ptrn = ctx.createPattern(img,'repeat');
+```
+#### 阴影
+__shadowOffsetX = float__  
+shadowOffsetX 和 shadowOffsetY 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 0。  
+__shadowOffsetY = float__  
+shadowOffsetX 和 shadowOffsetY 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 0。  
+__shadowBlur = float__  
+shadowBlur 用于设定阴影的模糊程度，其数值并不跟像素数量挂钩，也不受变换矩阵的影响，默认为 0。  
+__shadowColor = color__  
+shadowColor 是标准的 CSS 颜色值，用于设定阴影颜色效果，默认是全透明的黑色。  
+#### Canvas填充规则
+__ctx.fill(value)__  
+两个可能的值：  
++ nonzero：默认值
++ evenodd：奇偶环绕规则

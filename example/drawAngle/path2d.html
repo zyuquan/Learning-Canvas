@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="200" style="background: #eeeeee"></canvas>
+</body>
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const rect = new Path2D();
+    rect.rect(1, 1, 100, 100);
+    ctx.stroke(rect);
+
+    const arc = new Path2D();
+    arc.arc(152, 51, 50, 0, 2*Math.PI);
+    ctx.fill(arc);
+
+    const arcTo = new Path2D();
+    arcTo.moveTo(255, 1);
+    arcTo.arcTo(205, 50, 255, 200, 90);
+    ctx.stroke(arcTo);
+
+    const quadratic = new Path2D();
+    quadratic.moveTo(375,25);
+    quadratic.quadraticCurveTo(325,25,325,62.5);
+    quadratic.quadraticCurveTo(325,100,350,100);
+    quadratic.quadraticCurveTo(350,120,330,125);
+    quadratic.quadraticCurveTo(360,120,365,100);
+    quadratic.quadraticCurveTo(425,100,425,62.5);
+    quadratic.quadraticCurveTo(425,25,375,25);
+    ctx.stroke(quadratic);
+
+    const line = new Path2D();
+    line.moveTo(500, 10);
+    line.lineTo(500, 100);
+    line.lineTo(600, 100);
+    line.lineTo(600, 10);
+    // line.lineTo(500, 10);
+    line.closePath();
+    ctx.stroke(line);
+
+</script>
+</html>

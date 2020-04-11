@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="400" style="background: #eeeeee"></canvas>
+</body>
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    // M起点位置(x, y), h水平位置平移h，v垂直位置平移v, l坐标(x, y)，z闭合
+    // 大写是绝对位置，小写是相对位置
+    const svgLine = new Path2D("M10 150 h 50 v 50 L 10 200 z");
+    ctx.stroke(svgLine);
+</script>
+</html>
