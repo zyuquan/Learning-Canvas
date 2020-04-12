@@ -18,6 +18,8 @@
     + [图案样式](#图案样式)  
     + [阴影](#阴影)  
     + [Canvas填充规则](#Canvas填充规则)  
++ [绘制文本](#绘制文本)  
+    + [样式](#样式)  
 ## 基本用法
 #### canvas用法
 ```
@@ -206,3 +208,17 @@ __ctx.fill(value)__
 两个可能的值：  
 + nonzero：默认值
 + evenodd：奇偶环绕规则
+
+## 绘制文本
+canvas提供了两个绘制文本的方法分别是  
+```
+// 指定文本内容text, 位置(x, y), 最大宽度maxWidth(可选)
+fillText(text, x, y, maxWidth)
+//
+strokeText(text, x, y, maxWidth)
+```
+#### 样式
+__font = value__  
+__textAligin = value__ 文本对齐选项,可选值start, end, left, right or center. 默认值是 start  
+__textBaseline = value__ 基线对齐选项,可选值top, hanging, middle, alphabetic, ideographic, bottom。默认值是 alphabetic  
+__direction = value__ 文本方向,可选值ltr, rtl, inherit。默认值是 inherit  
