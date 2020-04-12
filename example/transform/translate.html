@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="180" height="180" style="background: #dddddd"></canvas>
+</body>
+<script>
+    const ctx = document.getElementById("canvas").getContext("2d");
+    for(let i = 0; i < 4; i++) {
+        for(let j = 0; j < 4; j++) {
+            ctx.save();
+            ctx.fillStyle = `rgb(${(255-100)*i}, ${(255-100)*j}, 255)`;
+            ctx.translate(i*30+i*15, j*30+j*15);
+            ctx.fillRect(0, 0, 30, 30);
+            ctx.restore();
+        }
+    }
+</script>
+</html>

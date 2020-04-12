@@ -234,6 +234,30 @@ ctx.drawImage(image, x, y)
 // image指定的图像， (x, y)位置，(width, height)图片的大小
 ctx.drawImage(image, x, y, width, height)
 // image指定的图像， (sx, sy)指定切片的位置，(sWidth, sHeight)切片的大小，
-// (x, y)指定剪切的图片放在画布的位置，(width, height)剪切下来的图片的大小
+// (x, y)指定剪切的图片放在画布的位置，(width, height)设置剪切下来的图片在画布的大小
 ctx.drawImage(image, sx, sy, sWidth, sHeight, x, y, width, height)
 ```
+
+## 变形
+在了解变形之前，我先介绍两个在你开始绘制复杂图形时必不可少的方法  
+__save()__ 保存当前画布所有状态  
+__restore()__ save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数。Canvas 的状态就是当前画面应用的所有样式和变形的一个快照  
+Canvas状态存储在栈中，每当save()方法被调用后，当前的状态就被推送到栈中保存。一个绘画状态包括：  
++ 当前应用的变形
++ 以及下面这些属性：strokeStyle, fillStyle, globalAlpha, lineWidth, lineCap, lineJoin, miterLimit, lineDashOffset, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, globalCompositeOperation, font, textAlign, textBaseline, direction, imageSmoothingEnabled
++ 当前的裁切路径（clipping path）
+你可以调用任意多次 save方法。每一次调用 restore 方法，上一个保存的状态就从栈中弹出，所有设定都恢复  
+变形的方法有以下几种：  
++ translate(x, y) 方法接受两个参数。x 是左右偏移量，y 是上下偏移量
++ scale(x, y) 方法可以缩放画布的水平和垂直的单位。两个参数都是实数，可以为负数，x 为水平缩放因子，y 为垂直缩放因子，如果比1小，会比缩放图形， 如果比1大会放大图形。默认值为1， 为实际大小
++ rotate(angle) 这个方法只接受一个参数：旋转的角度(angle)，它是顺时针方向的，以弧度为单位的值
++ transform(a, b, c, d, e, f)
+    + a (m11) 水平方向的缩放
+    + b(m12) 水平方向的倾斜偏移
+    + c(m21) 竖直方向的倾斜偏移
+    + d(m22) 竖直方向的缩放
+    + e(dx) 水平方向的移动
+    + f(dy) 竖直方向的移动
++ setTransform(a, b, c, d, e, f) 这个方法会将当前的变形矩阵重置为单位矩阵，然后用相同的参数调用 transform 方法。如果任意一个参数是无限大，那么变形矩阵也必须被标记为无限大，否则会抛出异常。从根本上来说，该方法是取消了当前变形,然后设置为指定的变形,一步完成
++ resetTransform() 重置当前变形为单位矩阵，它和调用以下语句是一样的：ctx.setTransform(1, 0, 0, 1, 0, 0)
+> __注意：__变形改变的是坐标系

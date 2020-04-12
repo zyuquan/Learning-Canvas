@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="190" height="190" style="background: #dddddd"></canvas>
+</body>
+<script>
+    const ctx = document.getElementById("canvas").getContext("2d");
+    ctx.lineWidth = .2;
+    ctx.beginPath();
+    ctx.arc(95, 95, 90, 0, 2*Math.PI);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.arc(95, 95, 3, 0, 2*Math.PI);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.lineCap = "round";
+    ctx.moveTo(95, 95);
+    ctx.lineTo(95, 40);
+    ctx.stroke();
+
+    ctx.translate(95, 95);
+    ctx.lineCap = "butt";
+    for (i = 0; i < 12; i++) {
+        ctx.save();
+        ctx.rotate(Math.PI/6*i);
+        ctx.moveTo(80, 0);
+        ctx.lineTo(90, 0);
+        ctx.stroke();
+        ctx.restore();
+    }
+    for (i = 0; i < 120; i++) {
+        ctx.save();
+        ctx.rotate(Math.PI/60*i);
+        ctx.moveTo(85, 0);
+        ctx.lineTo(90, 0);
+        ctx.stroke();
+        ctx.restore();
+    }
+</script>
+</html>
