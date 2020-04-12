@@ -20,6 +20,7 @@
     + [Canvas填充规则](#Canvas填充规则)  
 + [绘制文本](#绘制文本)  
     + [样式](#样式)  
++ [使用图像](#使用图像)  
 ## 基本用法
 #### canvas用法
 ```
@@ -222,3 +223,17 @@ __font = value__
 __textAligin = value__ 文本对齐选项,可选值start, end, left, right or center. 默认值是 start  
 __textBaseline = value__ 基线对齐选项,可选值top, hanging, middle, alphabetic, ideographic, bottom。默认值是 alphabetic  
 __direction = value__ 文本方向,可选值ltr, rtl, inherit。默认值是 inherit  
+
+## 使用图像
+引入图像到canvas里需要以下两步基本操作：  
++ 获得一个指向HTMLImageElement的对象或者另一个canvas元素的引用作为源，也可以通过提供一个URL的方式来使用图片
++ 使用drawImage()函数将图片绘制到画布上
+```
+// image指定的图像， (x, y)位置
+ctx.drawImage(image, x, y)
+// image指定的图像， (x, y)位置，(width, height)图片的大小
+ctx.drawImage(image, x, y, width, height)
+// image指定的图像， (sx, sy)指定切片的位置，(sWidth, sHeight)切片的大小，
+// (x, y)指定剪切的图片放在画布的位置，(width, height)剪切下来的图片的大小
+ctx.drawImage(image, sx, sy, sWidth, sHeight, x, y, width, height)
+```
