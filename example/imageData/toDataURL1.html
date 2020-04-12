@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400" style="background: #dddddd"></canvas>
+</body>
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    
+    const c = document.createElement("canvas");
+    const ct = c.getContext("2d");
+    ct.arc(10, 10, 5, 0, 2*Math.PI);
+    ct.fill();
+
+    const ctData = c.toDataURL('image/png');
+
+    const img = new Image();
+    img.src = ctData;
+    img.onload = function () {
+        const ptrn = ctx.drawImage(img, 0, 0);
+    }
+</script>
+</html>

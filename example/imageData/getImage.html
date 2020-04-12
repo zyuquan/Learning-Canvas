@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400" style="background: #dddddd"></canvas>
+</body>
+<script>
+    const ctx = document.getElementById("canvas").getContext("2d");
+    ctx.beginPath();
+    ctx.moveTo(40, 40);
+    ctx.arc(40, 40, 20, Math.PI/6, 2*Math.PI-Math.PI/12);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.fillStyle = "#dddddd";
+    ctx.arc(40, 30, 2, 0, 2*Math.PI);
+    ctx.fill();
+
+    const dot = document.createElement("canvas").getContext("2d");
+    dot.beginPath();
+    dot.fillStyle = "#000000";
+    dot.arc(2, 2, 2, 0, 2*Math.PI);
+    dot.fill();
+    const imageData = dot.getImageData(0, 0, 4, 4);
+
+    for (let i = 0; i < 15; i++) {
+        ctx.putImageData(imageData, 65+i*20, 40);
+    }
+
+    const ctxImage = ctx.getImageData(0, 0, 400, 80);
+    for (i = 0; i < 5; i++) {
+        ctx.putImageData(ctxImage, 0, i*80);
+    }
+</script>
+</html>
