@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="120" height="120" style="background: #dddddd"></canvas>
+</body>
+<script>
+    const ctx = document.getElementById("canvas").getContext("2d");
+
+    ctx.fillStyle = "#0f0f0f";
+    ctx.arc(60, 60, 40, 0, 2*Math.PI);
+    ctx.fill();
+
+    ctx.fillStyle = "#f0f0f0";
+    ctx.beginPath();
+    ctx.globalCompositeOperation = "multiply";
+    ctx.arc(80, 80, 40, 0, 2*Math.PI);
+    ctx.fill();
+</script>
+</html>
