@@ -22,6 +22,16 @@
     + [样式](#样式)  
 + [使用图像](#使用图像)  
 + [变形](#变形)  
++ [合成与裁剪](#合成与裁剪)  
+    + [裁切路径](#裁切路径)  
++ [动画](#动画)  
++ [像素操作](#像素操作)  
+    + [ImageData对象](#ImageData对象)  
+    + [创建一个ImageData对象](#创建一个ImageData对象)  
+    + [得到场景像素数据](#得到场景像素数据)  
+    + [在场景中写入像素数据](#在场景中写入像素数据)  
+    + [缩放和反锯齿](#缩放和反锯齿)  
+    + [保存图片](#保存图片)  
 ## 基本用法
 #### canvas用法
 ```
@@ -346,3 +356,103 @@ ctx.fillStyle = radgrad;
 ctx.fillRect(0,0,150,150);
 ```
 <img src="./images/clip.jpg" >
+
+## 动画
+```
+window.requestAnimationFrame(callback);
+window.cancelAnimationFrame();
+```
+## 像素操作
+到目前为止，我们尚未深入了解Canvas画布真实像素的原理，事实上，你可以直接通过ImageData对象操纵像素数据，直接读取或将数据数组写入该对象中。稍后我们也将深入了解如何控制图像使其平滑（反锯齿）以及如何从Canvas画布中保存图像  
+#### ImageData对象
+ImageData对象中存储着canvas对象真实的像素数据，它包含以下几个只读属性：  
+__width__  
+图片宽度，单位是像素  
+__height__  
+图片高度，单位是像素  
+__data__  
+Uint8ClampedArray类型的一维数组，包含着RGBA格式的整型数据，范围在0至255之间（包括255）。  
+例如，要读取图片中位于第50行，第200列的像素的蓝色部份，你会写以下代码：  
+```
+blueComponent = imageData.data[((50 * (imageData.width * 4)) + (200 * 4)) + 2];
+```
+根据行、列读取某像素点的R/G/B/A值的公式：  
+```
+imageData.data[((50 * (imageData.width * 4)) + (200 * 4)) + 0/1/2/3];
+```
+你可能用会使用Uint8ClampedArray.length属性来读取像素数组的大小（以bytes为单位）：  
+```
+var numBytes = imageData.data.length;
+```
+#### 创建一个ImageData对象
+去创建一个新的，空白的ImageData对象，你应该会使用createImageData() 方法。有2个版本的createImageData()方法。  
+```
+var myImageData = ctx.createImageData(width, height);
+```
+上面代码创建了一个新的具体特定尺寸的ImageData对象。所有像素被预设为透明黑。  
+你也可以创建一个被anotherImageData对象指定的相同像素的ImageData对象。这个新的对象像素全部被预设为透明黑。这个并非复制了图片数据  
+```
+var myImageData = ctx.createImageData(anotherImageData);
+```
+#### 得到场景像素数据
+为了获得一个包含画布场景像素数据的ImageData对像，你可以用getImageData()方法：  
+```
+var myImageData = ctx.getImageData(left, top, width, height);
+```
+这个方法会返回一个ImageData对象，它代表了画布区域的对象数据，此画布的四个角落分别表示为(left, top), (left + width, top), (left, top + height), 以及(left + width, top + height)四个点。这些坐标点被设定为画布坐标空间元素。  
+> __注__ ：任何在画布以外的元素都会被返回成一个透明黑的ImageData对像。
+#### 在场景中写入像素数据
+你可以用putImageData()方法去对场景进行像素数据的写入。  
+```
+ctx.putImageData(myImageData, dx, dy);
+```
+dx和dy参数表示你希望在场景内左上角绘制的像素数据所得到的设备坐标。  
+#### 缩放和反锯齿
+在drawImage() 方法， 第二个画布和imageSmoothingEnabled 属性的帮助下，我们可以放大显示我们的图片及看到详情内容。  
+因为反锯齿默认是启用的，我们可能想要关闭它以看到清楚的像素。你可以通过切换勾选框来看到imageSmoothingEnabled属性的效果（不同浏览器需要不同前缀）。  
+```
+var img = new Image();
+img.src = 'https://mdn.mozillademos.org/files/5397/rhino.jpg';
+img.onload = function() {
+  draw(this);
+};
+
+function draw(img) {
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  img.style.display = 'none';
+  var zoomctx = document.getElementById('zoom').getContext('2d');
+
+  var smoothbtn = document.getElementById('smoothbtn');
+  var toggleSmoothing = function(event) {
+    zoomctx.imageSmoothingEnabled = this.checked;
+    zoomctx.mozImageSmoothingEnabled = this.checked;
+    zoomctx.webkitImageSmoothingEnabled = this.checked;
+    zoomctx.msImageSmoothingEnabled = this.checked;
+  };
+  smoothbtn.addEventListener('change', toggleSmoothing);
+
+  var zoom = function(event) {
+    var x = event.layerX;
+    var y = event.layerY;
+    zoomctx.drawImage(canvas,
+                      Math.abs(x - 5),
+                      Math.abs(y - 5),
+                      10, 10,
+                      0, 0,
+                      200, 200);
+  };
+
+  canvas.addEventListener('mousemove', zoom);
+}
+```
+#### 保存图片
+HTMLCanvasElement  提供一个toDataURL()方法，此方法在保存图片的时候非常有用。它返回一个包含被类型参数规定的图像表现格式的数据链接。返回的图片分辨率是96dpi。  
+__canvas.toDataURL('image/png')__  
+默认设定。创建一个PNG图片  
+__canvas.toDataURL('image/jpeg', quality)__  
+创建一个JPG图片。你可以有选择地提供从0到1的品质量，1表示最好品质，0基本不被辨析但有比较小的文件大小。  
+你也可以从画布中创建一个Blob对像  
+__canvas.toBlob(callback, type, encoderOptions)__  
+这个创建了一个在画布中的代表图片的Blob对像  
